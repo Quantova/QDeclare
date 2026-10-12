@@ -1,0 +1,61 @@
+{
+  "name": "@quantovainc/qdeclare",
+  "version": "0.1.0",
+  "description": "Post quantum asset and interest declarations for public officials. Seals registrations, declarations, corrections, acknowledgements and reviews with ML-DSA-65 under FIPS 204 and Quantova time proofs, so an edited, replaced or backdated declaration is detected.",
+  "main": "index.js",
+  "types": "index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./index.d.ts",
+      "default": "./index.js"
+    },
+    "./package.json": "./package.json"
+  },
+  "bin": {
+    "qdeclare": "bin/qdeclare.js"
+  },
+  "files": [
+    "index.js",
+    "index.d.ts",
+    "lib/",
+    "bin/",
+    "wasm/qdeclare_native.js",
+    "wasm/qdeclare_native_bg.wasm",
+    "wasm/qdeclare_native.d.ts",
+    "LICENSE-APACHE",
+    "LICENSE-MIT",
+    "NOTICE",
+    "AUTHORS"
+  ],
+  "engines": {
+    "node": ">=20"
+  },
+  "dependencies": {
+    "@quantovainc/qstamp": "0.1.5"
+  },
+  "keywords": [
+    "post-quantum",
+    "quantum-safe",
+    "asset-declarations",
+    "conflict-of-interest",
+    "ethics",
+    "anti-corruption",
+    "government",
+    "ml-dsa",
+    "fips-204",
+    "quantova"
+  ],
+  "license": "Apache-2.0 OR MIT",
+  "author": "Quantova Inc",
+  "homepage": "https://github.com/Quantova/QDeclare",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Quantova/QDeclare.git"
+  },
+  "bugs": {
+    "url": "https://github.com/Quantova/QDeclare/issues"
+  },
+  "publishConfig": {
+    "access": "public"
+  }
+}
