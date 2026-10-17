@@ -79,10 +79,16 @@ export interface VerifyOptions {
   requireAnchor?: boolean;
   at?: string;
   maxAnchorDelay?: number;
+  maxAnchorLookups?: number;
+  keyStatus?: (keyId: string) => unknown;
   rpc?: string | string[];
   client?: unknown;
   clients?: Array<string | unknown>;
   trustSingleEndpoint?: boolean;
+  trustCustomEndpoints?: boolean;
+  allowLoopback?: boolean;
+  endpointAllowList?: string[];
+  expectedSender?: string | string[];
   contract?: string;
   trustCustomContract?: boolean;
 }
@@ -114,6 +120,8 @@ export interface AnchorOptions {
   client?: unknown;
   clients?: Array<string | unknown>;
   trustSingleEndpoint?: boolean;
+  allowLoopback?: boolean;
+  endpointAllowList?: string[];
   meter?: number;
   maxFee?: string | number;
   timeoutMs?: number;
@@ -131,7 +139,7 @@ export function acknowledgement(options: AcknowledgementOptions): Envelope;
 export function review(options: ReviewOptions): Envelope;
 export function create(type: RecordType, options: Record<string, unknown>): Envelope;
 export function anchor(envelopes: Envelope | Envelope[], options: AnchorOptions): Promise<Envelope[]>;
-export function complete(envelopes: Envelope | Envelope[], pending: unknown, options?: { rpc?: string | string[]; client?: unknown; clients?: Array<string | unknown>; trustSingleEndpoint?: boolean; timeoutMs?: number }): Promise<Envelope[]>;
+export function complete(envelopes: Envelope | Envelope[], pending: unknown, options?: { rpc?: string | string[]; client?: unknown; clients?: Array<string | unknown>; trustSingleEndpoint?: boolean; allowLoopback?: boolean; endpointAllowList?: string[]; timeoutMs?: number }): Promise<Envelope[]>;
 export function verify(envelope: unknown, options: VerifyOptions): Promise<VerifyResult>;
 export function refOf(envelope: Envelope): string;
 export function anchorDigest(envelope: Envelope): string;
