@@ -86,7 +86,7 @@ When a record is anchored, only a 32 byte Qstamp commitment reaches the chain. I
 8. A record that depends on a series is valid only when the verifier declares that every record it holds for the series involved was supplied. Without that declaration the result is indeterminate, and with it a missing record makes the result invalid.
 9. A declaration is signed by the official named in its registration.
 10. A correction names an earlier declaration of the same period in its own series and states the reason, and only a correction names a corrected version. A declaration for a period that an earlier declaration of the series already covers must be a correction.
-11. An acknowledgement reports whether the declaration was filed by the deadline it states, taking the later of the stated filing time and its anchor time. A late filing is reported and does not make the acknowledgement invalid.
+11. An acknowledgement reports whether the declaration was filed by the deadline it states, taking the later of the stated filing time and its anchor time. A late filing is reported as a notice in the result and does not make the acknowledgement invalid.
 12. When documents are supplied, their fingerprints match the signed fingerprints, and when a party identity and salt are supplied, they match the commitment.
 13. Each anchor is verified under the QDeclare record kind with a SHA3 digest, and the stated time is not later than the anchor time, allowing five minutes. An anchor more than twenty four hours after the stated time, unless another limit is given, or later than a given verification time, does not prove the stated time and makes the result indeterminate.
 
