@@ -64,6 +64,8 @@ export interface ReviewOptions {
   note?: string;
 }
 
+export type KeyStatus = { revoked: false } | { revoked: true; revokedAt: number };
+
 export interface VerifyOptions {
   type: RecordType;
   ethicsKeys?: KeyRef[];
@@ -80,7 +82,9 @@ export interface VerifyOptions {
   at?: string;
   maxAnchorDelay?: number;
   maxAnchorLookups?: number;
-  keyStatus?: (keyId: string) => unknown;
+  deadlineMs?: number;
+  keyStatus?: (keyId: string) => KeyStatus | Promise<KeyStatus>;
+  keyStatusTimeoutMs?: number;
   rpc?: string | string[];
   client?: unknown;
   clients?: Array<string | unknown>;
