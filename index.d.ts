@@ -14,6 +14,11 @@ export interface Envelope {
   anchor?: unknown;
 }
 
+export interface SeriesLedger {
+  read(name: string): Promise<string | null>;
+  compareAndSwap(name: string, expected: string | null, next: string): Promise<boolean>;
+}
+
 export interface KeyDescription {
   format: 'qdeclare-key/1';
   algorithm: 'ML-DSA-65';
@@ -43,6 +48,7 @@ export interface DeclarationOptions {
   reason?: string;
   previous?: Envelope;
   first?: boolean;
+  ledger?: string | SeriesLedger;
   filedAt?: string;
   note?: string;
 }
@@ -139,10 +145,13 @@ export function keyId(key: Uint8Array): string;
 export function describeKey(key: Uint8Array): KeyDescription;
 export function commitParty(identity: string, options?: { salt?: Uint8Array; secret?: Uint8Array; scope?: string }): { salt: Uint8Array; ref: string };
 export function registration(options: RegistrationOptions): Envelope;
+export function declaration(options: DeclarationOptions & { ledger: string | SeriesLedger }): Promise<Envelope>;
 export function declaration(options: DeclarationOptions): Envelope;
 export function acknowledgement(options: AcknowledgementOptions): Envelope;
 export function review(options: ReviewOptions): Envelope;
-export function create(type: RecordType, options: Record<string, unknown>): Envelope;
+export function create(type: RecordType, options: Record<string, unknown>): Envelope | Promise<Envelope>;
+export function folderLedger(folder: string): SeriesLedger;
+export function ledgerLatest(ledger: string | SeriesLedger, type: RecordType, seriesRef: string): Promise<Envelope | null>;
 export function anchor(envelopes: Envelope | Envelope[], options: AnchorOptions): Promise<Envelope[]>;
 export function complete(envelopes: Envelope | Envelope[], pending: unknown, options?: { rpc?: string | string[]; client?: unknown; clients?: Array<string | unknown>; trustSingleEndpoint?: boolean; allowLoopback?: boolean; endpointAllowList?: string[]; timeoutMs?: number }): Promise<Envelope[]>;
 export function verify(envelope: unknown, options: VerifyOptions): Promise<VerifyResult>;

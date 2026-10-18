@@ -39,6 +39,9 @@ QDeclare is standalone. It runs on the systems of its users, holds keys locally 
 
 5. Acknowledge and review. The ethics body calls acknowledgement with the legal deadline, and a reviewing officer calls review with the fingerprint of the review outcome.
 
+
+Signing alone is not a gate. Two officials who each hold the same previous record can both sign the next record of a series, so declaration take a ledger, one folder or one store with an atomic compare and swap shared by every signer, which serialises the declarations of a registration. With it a record is signed only when it follows the latest record of its series that the ledger holds, and a second first record or a record after a stale previous one is refused with the code QDECLARE_LEDGER. Without the ledger the integrating system must serialise each series itself.
+
 6. Anchor promptly. A single service with a funded Quantova account anchors new records in batches under the QDeclare record kind, and each record receives its own receipt.
 
 7. Verify on demand. Auditors and courts verify any record against the lists of trusted keys and the records held, with the verify command, the library or the independent procedure below.
@@ -83,7 +86,7 @@ When a record is anchored, only a 32 byte Qstamp commitment reaches the chain. I
 5. Copied and matched fields agree with the records they come from, and limits taken from linked records are respected.
 6. Each record of a series continues the previous record in position and currency, and any limit on the series is respected.
 7. Any two different supplied records in the same position of a series involved make the result invalid.
-8. A record that depends on a series is valid only when the verifier declares that every record it holds for the series involved was supplied. Without that declaration the result is indeterminate, and with it a missing record makes the result invalid.
+8. A record that depends on a series is valid only when the verifier declares that every record it holds for the series involved was supplied. Without that declaration the result is indeterminate, and with it a missing record makes the result invalid. The verifier gives in records every record it holds for each series involved, because a second record at the same position is found only among the records given, and allSupplied is a declaration that it did so.
 9. A declaration is signed by the official named in its registration.
 10. A correction names an earlier declaration of the same period in its own series and states the reason, and only a correction names a corrected version. A declaration for a period that an earlier declaration of the series already covers must be a correction. Periods are compared once made canonical as described for party identifiers, so FY-2025 and fy 2025 are the same period.
 11. An acknowledgement reports whether the declaration was filed by the deadline it states, taking the later of the stated filing time and the earliest anchor of the declaration that verifies. A late filing, or a declaration that is not anchored and so is not proven to have been filed in time, is reported only as a notice in the result. Neither makes the acknowledgement invalid or indeterminate, because the acknowledgement itself is genuine. The result also carries facts.onTime, which is true when filing by the deadline is proven, false when the declaration was filed late and null when filing in time is only claimed, so a verifier that enforces a filing deadline must require facts.onTime to be true.
