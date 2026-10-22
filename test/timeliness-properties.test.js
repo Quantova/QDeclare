@@ -43,7 +43,7 @@ test('facts.onTime is true only when filing by the deadline is proven by an anch
     const registration = await at(q.registration({ key: K.ethics, declarantKeyId: q.keyId(K.declarant), office: 'Office ' + round, legalBasis: 'Act 12', registeredAt: iso(base) }), base + 1);
     const deadline = base + 300 + int(300);
     const claimed = deadline - 250 + int(400);
-    const decl = q.declaration({ key: K.declarant, registration, period: 'FY-' + round, content: Buffer.from('assets ' + round), first: true, filedAt: iso(claimed) });
+    const decl = q.declaration({ ledger: false, key: K.declarant, registration, period: 'FY-' + round, content: Buffer.from('assets ' + round), first: true, filedAt: iso(claimed) });
     const genuine = [];
     const n = int(4);
     for (let i = 0; i < n; i += 1) genuine.push(await at(decl, claimed - 60 + int(600)));

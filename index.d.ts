@@ -48,7 +48,7 @@ export interface DeclarationOptions {
   reason?: string;
   previous?: Envelope;
   first?: boolean;
-  ledger?: string | SeriesLedger;
+  ledger: string | SeriesLedger | false;
   filedAt?: string;
   note?: string;
 }
@@ -146,7 +146,7 @@ export function describeKey(key: Uint8Array): KeyDescription;
 export function commitParty(identity: string, options?: { salt?: Uint8Array; secret?: Uint8Array; scope?: string }): { salt: Uint8Array; ref: string };
 export function registration(options: RegistrationOptions): Envelope;
 export function declaration(options: DeclarationOptions & { ledger: string | SeriesLedger }): Promise<Envelope>;
-export function declaration(options: DeclarationOptions): Envelope;
+export function declaration(options: DeclarationOptions & { ledger: false }): Envelope;
 export function acknowledgement(options: AcknowledgementOptions): Envelope;
 export function review(options: ReviewOptions): Envelope;
 export function create(type: RecordType, options: Record<string, unknown>): Envelope | Promise<Envelope>;
