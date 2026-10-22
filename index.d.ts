@@ -74,6 +74,7 @@ export type KeyStatus = { revoked: false } | { revoked: true; revokedAt: number 
 
 export interface VerifyOptions {
   type: RecordType;
+  network: 'testnet' | 'custom';
   ethicsKeys?: KeyRef[];
   declarantKeys?: KeyRef[];
   reviewerKeys?: KeyRef[];
