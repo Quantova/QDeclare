@@ -33,14 +33,16 @@ test('a timely declaration stays timely when later re-anchors are supplied in an
     assert.strictEqual(r.facts.onTime, true);
   }
   const only = await q.verify(f.ack, Object.assign({ type: 'acknowledgement', allSupplied: true, records: [f.reg, f.late] }, f.roles, f.net.opts));
-  assert.ok(only.notices.some((n) => /after the deadline/.test(n)));
+  assert.strictEqual(only.status, 'invalid');
+  assert.ok(only.checks.some((c) => c.name === 'timeliness' && !c.ok && /after the deadline/.test(c.detail)));
   assert.strictEqual(only.facts.onTime, false);
 });
 
-test('an unanchored declaration gives a notice that filing in time is not proven', async () => {
+test('an unanchored declaration leaves filing in time unproven', async () => {
   const f = await filed();
   const r = await q.verify(f.ack, Object.assign({ type: 'acknowledgement', allSupplied: true, requireAnchor: false, records: [f.reg, f.decl] }, f.roles, f.net.opts));
-  assert.ok(r.notices.some((n) => /not proven/.test(n)), JSON.stringify(r.notices));
+  assert.strictEqual(r.status, 'indeterminate');
+  assert.ok(r.checks.some((c) => c.name === 'timeliness' && !c.ok && /not anchored/.test(c.detail)), JSON.stringify(r.checks));
   assert.strictEqual(r.facts.onTime, null);
 });
 
