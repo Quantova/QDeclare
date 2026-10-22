@@ -35,6 +35,7 @@ export interface RegistrationOptions {
   legalBasis: string;
   registeredAt?: string;
   note?: string;
+  clock?: { chainMs: number };
 }
 
 export interface DeclarationOptions {
@@ -51,6 +52,7 @@ export interface DeclarationOptions {
   ledger: string | SeriesLedger | false;
   filedAt?: string;
   note?: string;
+  clock?: { chainMs: number };
 }
 
 export interface AcknowledgementOptions {
@@ -59,6 +61,7 @@ export interface AcknowledgementOptions {
   deadline: string;
   acknowledgedAt?: string;
   note?: string;
+  clock?: { chainMs: number };
 }
 
 export interface ReviewOptions {
@@ -68,6 +71,7 @@ export interface ReviewOptions {
   outcome?: Uint8Array;
   reviewedAt?: string;
   note?: string;
+  clock?: { chainMs: number };
 }
 
 export type KeyStatus = { revoked: false } | { revoked: true; revokedAt: number };
