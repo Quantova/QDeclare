@@ -168,7 +168,7 @@ test('a file that changes while the CLI hashes it is refused and nothing is writ
     fs.writeFileSync(hook, 'const fs=require(\'fs\');const t=process.env.CHANGE_FILE;const open=fs.promises.open;fs.promises.open=async function(p,...a){const fh=await open.call(this,p,...a);if(p===t){const read=fh.read.bind(fh);let n=0;fh.read=async(...b)=>{const r=await read(...b);n+=1;if(n===1){const fd=fs.openSync(t,\'r+\');fs.writeSync(fd,Buffer.from(\'Z\'),0,1,0);fs.closeSync(fd);}return r;};}return fh;};');
     const declarant = q.generateKey();
     const registration = path.join(dir, 'registration.json');
-    fs.writeFileSync(registration, JSON.stringify(q.registration({ key: q.generateKey(), declarantKeyId: q.keyId(declarant), office: 'Mayor', legalBasis: 'Act 1' })));
+    fs.writeFileSync(registration, JSON.stringify(q.registration({ key: q.generateKey(), declarantKeyId: q.keyId(declarant), office: 'Mayor', legalBasis: 'Act 1', registeredAt: new Date(Date.now() - 60000).toISOString() })));
     const keyFile = path.join(dir, 'key');
     fs.writeFileSync(keyFile, Buffer.from(declarant).toString('hex') + '\n', { mode: 0o600 });
     await new Promise((resolve) => setTimeout(resolve, 50));
