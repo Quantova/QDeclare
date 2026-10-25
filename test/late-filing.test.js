@@ -40,7 +40,7 @@ test('anchors the chain cannot answer never turn a filing proven late into an un
   const roles = { ethicsKeys: [q.keyId(K.ethics)], declarantKeys: [q.keyId(K.declarant)] };
   const registration = await at(q.registration({ key: K.ethics, declarantKeyId: q.keyId(K.declarant), office: 'Office', legalBasis: 'Act 12', registeredAt: iso(now - 7000) }), now - 6990);
   const deadline = now - 4000;
-  const decl = await at(q.declaration({ ledger: false, key: K.declarant, registration, period: 'FY-1', content: Buffer.from('assets'), first: true, filedAt: iso(deadline - 100) }), deadline + 600);
+  const decl = await at(q.declaration({ ledger: false, key: K.declarant, registration, period: '2001', content: Buffer.from('assets'), first: true, filedAt: iso(deadline - 100) }), deadline + 600);
   const ack = await at(q.acknowledgement({ key: K.ethics, declaration: decl, deadline: iso(deadline), acknowledgedAt: iso(deadline + 700) }), deadline + 710);
   net.chain.block(now);
   const run = (records) => q.verify(ack, Object.assign({ type: 'acknowledgement', at: iso(now), allSupplied: true, records: [registration].concat(records) }, roles, net.opts));

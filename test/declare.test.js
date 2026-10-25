@@ -15,7 +15,7 @@ async function filed() {
   const K = { ethics: q.generateKey(), declarant: q.generateKey(), reviewer: q.generateKey() };
   const t0 = now - 80000;
   const reg = await at(q.registration({ key: K.ethics, declarantKeyId: q.keyId(K.declarant), office: 'Minister of Finance', legalBasis: 'Act 12', registeredAt: iso(t0) }), t0 + 5);
-  const decl = q.declaration({ ledger: false, key: K.declarant, registration: reg, period: 'FY-2025', content: Buffer.from('assets'), first: true, filedAt: iso(t0 + 100) });
+  const decl = q.declaration({ ledger: false, key: K.declarant, registration: reg, period: '2025', content: Buffer.from('assets'), first: true, filedAt: iso(t0 + 100) });
   const timely = await at(decl, t0 + 110);
   const late = await at(decl, t0 + 5000);
   const ack = await at(q.acknowledgement({ key: K.ethics, declaration: timely, deadline: iso(t0 + 1000), acknowledgedAt: iso(t0 + 1100) }), t0 + 1110);
@@ -46,11 +46,12 @@ test('an unanchored declaration leaves filing in time unproven', async () => {
   assert.strictEqual(r.facts.onTime, null);
 });
 
-test('a second declaration for the same period written another way must be a correction', async () => {
+test('a period is written only as YYYY, YYYY-MM or YYYY-Qn and a second declaration for the same period must be a correction', async () => {
   const f = await filed();
-  for (const period of ['fy2025', 'FY 2025', 'FY‑2025', 'FY.2025']) {
-    assert.throws(() => q.declaration({ ledger: false, key: f.K.declarant, registration: f.reg, period, content: Buffer.from('more'), previous: f.timely, filedAt: iso(f.t0 + 200) }), /correction/);
+  for (const period of ['fy2025', 'FY 2025', 'FY‑2025', '2025-1', '202501', '01/2025', '2025-q1']) {
+    assert.throws(() => q.declaration({ ledger: false, key: f.K.declarant, registration: f.reg, period, content: Buffer.from('more'), previous: f.timely, filedAt: iso(f.t0 + 200) }), /YYYY, YYYY-MM or YYYY-Qn/, period);
   }
-  const next = q.declaration({ ledger: false, key: f.K.declarant, registration: f.reg, period: 'FY-2026', content: Buffer.from('more'), previous: f.timely, filedAt: iso(f.t0 + 200) });
+  assert.throws(() => q.declaration({ ledger: false, key: f.K.declarant, registration: f.reg, period: '2025', content: Buffer.from('more'), previous: f.timely, filedAt: iso(f.t0 + 200) }), /correction/);
+  const next = q.declaration({ ledger: false, key: f.K.declarant, registration: f.reg, period: '2026', content: Buffer.from('more'), previous: f.timely, filedAt: iso(f.t0 + 200) });
   assert.strictEqual(next.statement.seq, 2);
 });
