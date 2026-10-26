@@ -1,6 +1,6 @@
 {
   "name": "@quantovainc/qdeclare",
-  "version": "0.7.4",
+  "version": "0.7.5",
   "description": "Post quantum asset and interest declarations for public officials. Seals registrations, declarations, corrections, acknowledgements and reviews with ML-DSA-65 under FIPS 204 and Quantova time proofs, so an edited, replaced or backdated declaration is detected.",
   "main": "index.js",
   "types": "index.d.ts",
