@@ -1,6 +1,6 @@
 {
   "name": "@quantovainc/qdeclare",
-  "version": "0.7.9",
+  "version": "0.7.10",
   "description": "Post quantum asset and interest declarations for public officials. Seals registrations, declarations, corrections, acknowledgements and reviews with ML-DSA-65 under FIPS 204 and Quantova time proofs, so an edited, replaced or backdated declaration is detected.",
   "main": "index.js",
   "types": "index.d.ts",
@@ -39,7 +39,7 @@
     "linux"
   ],
   "dependencies": {
-    "@quantovainc/qstamp": "0.6.10"
+    "@quantovainc/qstamp": "0.6.13"
   },
   "keywords": [
     "post-quantum",
